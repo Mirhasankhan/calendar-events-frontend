@@ -42,7 +42,10 @@ const NewEvent = ({ currentDate }: { currentDate: TEvent }) => {
         className="btn"
         onClick={(e) => {
           e.preventDefault();
-          document.getElementById("my_modal_4")?.showModal();
+          const dialog = document.getElementById(
+            "my_modal_4"
+          ) as HTMLDialogElement;
+          dialog?.showModal();
         }}
       >
         Add Event
