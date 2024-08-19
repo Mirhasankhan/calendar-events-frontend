@@ -51,7 +51,6 @@ const UpdateEvent = ({
           ) as HTMLDialogElement;
           dialog?.showModal();
         }}
-        // onClick={() => handleUpdateEvent(currentDate._id, eventId)}
       ></MdOutlineEdit>
       <dialog id="my_modal_3" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">

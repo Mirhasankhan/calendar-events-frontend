@@ -1,24 +1,18 @@
 import { useEffect, useState } from "react";
 import AddEvents from "./AddEvents";
 import { IoCalendarNumberSharp } from "react-icons/io5";
-// import AddEvent from "./AddEvent";
-
-// type TDates = {
-//   _id: string;
-//   number: number;
-// };
 
 const Calendar = () => {
   const [dates, setDates] = useState([]);
   const [currentDate, setCurrentDate] = useState([]);
-  const [refetch, setRefetch] = useState(0);
+
   useEffect(() => {
     fetch("https://calendar-events-backend-ruby.vercel.app/api/v1/dates")
       .then((res) => res.json())
       .then((data) => {
         setDates(data);
       });
-  }, [refetch]);
+  }, []);
 
   const handleEvent = (day: any) => {
     setCurrentDate(day);
@@ -47,7 +41,7 @@ const Calendar = () => {
             {dates?.slice(0, 31).map((date: any) => (
               <p
                 onClick={() => handleEvent(date)}
-                className={`border text-center py-2 font-medium ${
+                className={`border text-center py-2 font-medium hover:cursor-pointer ${
                   date?.events?.length > 0
                     ? "bg-blue-300 text-white"
                     : "bg-white"
@@ -60,10 +54,7 @@ const Calendar = () => {
           </div>
         </div>
         <div className="md:col-span-2 col-span-5">
-          <AddEvents
-            setRefetch={setRefetch}
-            currentDate={currentDate}
-          ></AddEvents>
+          <AddEvents currentDate={currentDate}></AddEvents>
         </div>
       </div>
     </div>

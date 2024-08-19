@@ -2,13 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { TEvent } from "./DeleteEvent";
 
-const NewEvent = ({
-  currentDate,
-  setRefetch,
-}: {
-  currentDate: TEvent;
-  setRefetch: any;
-}) => {
+const NewEvent = ({ currentDate }: { currentDate: TEvent }) => {
   const [eventType, setEventType] = useState("work");
   const [eventTitle, setEventTitle] = useState("");
 
@@ -31,7 +25,6 @@ const NewEvent = ({
         }
       );
       toast.success("Event Added Successfully");
-      setRefetch(1);
 
       if (!response.ok) {
         toast.error("something went wrong");
@@ -46,7 +39,7 @@ const NewEvent = ({
   return (
     <div>
       <button
-        className="text-white hover:text-green-400 bg-green-400 hover:bg-white font-medium p-3 rounded-md border-2 mt-6 border-green-400"
+        className="text-white hover:text-green-400 bg-green-400 hover:bg-white font-medium py-1 px-3 rounded-md border-2 mt-6 border-green-400"
         onClick={(e) => {
           e.preventDefault();
           const dialog = document.getElementById(

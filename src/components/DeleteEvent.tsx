@@ -20,7 +20,6 @@ const DeleteEvent = ({
   currentDate: TEvent;
   eventId: string;
 }) => {
-  console.log(currentDate);
   const deleteEvent = async (dateId: string, eventId: string) => {
     try {
       const response = await fetch(

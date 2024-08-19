@@ -1,14 +1,23 @@
+import { useEffect, useState } from "react";
 import DeleteEvent from "./DeleteEvent";
 import NewEvent from "./NewEvent";
 import UpdateEvent from "./UpdateEvent";
 
-const AddEvents = ({
-  currentDate,
-  setRefetch,
-}: {
-  currentDate: any;
-  setRefetch: any;
-}) => {
+const AddEvents = ({ currentDate }: { currentDate: any }) => {
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    if (currentDate._id) {
+      fetch(
+        `https://calendar-events-backend-ruby.vercel.app/api/v1/dates/${currentDate._id}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setDate(data);
+        });
+    }
+  }, [currentDate, date]);
+
   return (
     <div>
       <div>
@@ -18,7 +27,7 @@ const AddEvents = ({
               {currentDate.day}, {currentDate.number} August
             </h1>
             <div className="grid grid-cols-2 gap-4">
-              {currentDate?.events?.map((event: any) => (
+              {date["0"]?.events?.map((event: any) => (
                 <div
                   key={event.id}
                   className="flex justify-between border rounded-md p-2 border-blue-500 text-blue-400 cursor-pointer"
@@ -40,10 +49,7 @@ const AddEvents = ({
                 </div>
               ))}
             </div>
-            <NewEvent
-              setRefetch={setRefetch}
-              currentDate={currentDate}
-            ></NewEvent>
+            <NewEvent currentDate={currentDate}></NewEvent>
           </div>
         ) : (
           <p className="pt-6 font-medium">Click On Date To Add New Events</p>
