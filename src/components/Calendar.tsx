@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AddEvents from "./AddEvents";
+import { IoCalendarNumberSharp } from "react-icons/io5";
 // import AddEvent from "./AddEvent";
 
 // type TDates = {
@@ -10,13 +11,14 @@ import AddEvents from "./AddEvents";
 const Calendar = () => {
   const [dates, setDates] = useState([]);
   const [currentDate, setCurrentDate] = useState([]);
+  const [refetch, setRefetch] = useState(0);
   useEffect(() => {
     fetch("https://calendar-events-backend-ruby.vercel.app/api/v1/dates")
       .then((res) => res.json())
       .then((data) => {
         setDates(data);
       });
-  }, []);
+  }, [refetch]);
 
   const handleEvent = (day: any) => {
     setCurrentDate(day);
@@ -24,10 +26,14 @@ const Calendar = () => {
 
   return (
     <div>
-      <h1>this is the calendar</h1>
-      <h1 className="font-medium py-4 text-xl">August 2024</h1>
+      <div className="flex gap-1 items-center my-6 border-b-2">
+        <IoCalendarNumberSharp className="text-3xl" />
+        <h1 className="font-medium">Calendar</h1>
+        <h1 className="font-medium py-4 ml-24">August 2024</h1>
+      </div>
+
       <div className="grid grid-cols-5 gap-6">
-        <div className="col-span-3">
+        <div className="md:col-span-3 col-span-5">
           <div className="grid grid-cols-7 text-center pb-1 font-medium">
             <h1>SUN</h1>
             <h1>MON</h1>
@@ -41,8 +47,10 @@ const Calendar = () => {
             {dates?.slice(0, 31).map((date: any) => (
               <p
                 onClick={() => handleEvent(date)}
-                className={`border text-center py-2 ${
-                  date?.events?.length > 0 ? "bg-blue-300" : "bg-white"
+                className={`border text-center py-2 font-medium ${
+                  date?.events?.length > 0
+                    ? "bg-blue-300 text-white"
+                    : "bg-white"
                 } hover:bg-gray-200`}
                 key={date._id}
               >
@@ -51,8 +59,11 @@ const Calendar = () => {
             ))}
           </div>
         </div>
-        <div className="col-span-2">
-          <AddEvents currentDate={currentDate}></AddEvents>
+        <div className="md:col-span-2 col-span-5">
+          <AddEvents
+            setRefetch={setRefetch}
+            currentDate={currentDate}
+          ></AddEvents>
         </div>
       </div>
     </div>

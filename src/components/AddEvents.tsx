@@ -2,14 +2,20 @@ import DeleteEvent from "./DeleteEvent";
 import NewEvent from "./NewEvent";
 import UpdateEvent from "./UpdateEvent";
 
-const AddEvents = ({ currentDate }: { currentDate: any }) => {
+const AddEvents = ({
+  currentDate,
+  setRefetch,
+}: {
+  currentDate: any;
+  setRefetch: any;
+}) => {
   return (
     <div>
       <div>
         {currentDate?.number ? (
           <div>
             <h1 className="font-medium py-2">
-              Add Event {currentDate.day}, {currentDate.number} August
+              {currentDate.day}, {currentDate.number} August
             </h1>
             <div className="grid grid-cols-2 gap-4">
               {currentDate?.events?.map((event: any) => (
@@ -34,7 +40,10 @@ const AddEvents = ({ currentDate }: { currentDate: any }) => {
                 </div>
               ))}
             </div>
-            <NewEvent currentDate={currentDate}></NewEvent>
+            <NewEvent
+              setRefetch={setRefetch}
+              currentDate={currentDate}
+            ></NewEvent>
           </div>
         ) : (
           <p className="pt-6 font-medium">Click On Date To Add New Events</p>

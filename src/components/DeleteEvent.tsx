@@ -42,7 +42,7 @@ const DeleteEvent = ({
     }
   };
   return (
-    <div>
+    <div className="mb-2">
       <RiDeleteBin6Line
         onClick={() => deleteEvent(currentDate._id, eventId)}
       ></RiDeleteBin6Line>

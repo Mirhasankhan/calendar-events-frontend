@@ -2,7 +2,13 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { TEvent } from "./DeleteEvent";
 
-const NewEvent = ({ currentDate }: { currentDate: TEvent }) => {
+const NewEvent = ({
+  currentDate,
+  setRefetch,
+}: {
+  currentDate: TEvent;
+  setRefetch: any;
+}) => {
   const [eventType, setEventType] = useState("work");
   const [eventTitle, setEventTitle] = useState("");
 
@@ -25,6 +31,7 @@ const NewEvent = ({ currentDate }: { currentDate: TEvent }) => {
         }
       );
       toast.success("Event Added Successfully");
+      setRefetch(1);
 
       if (!response.ok) {
         toast.error("something went wrong");
@@ -39,7 +46,7 @@ const NewEvent = ({ currentDate }: { currentDate: TEvent }) => {
   return (
     <div>
       <button
-        className="btn"
+        className="text-white hover:text-green-400 bg-green-400 hover:bg-white font-medium p-3 rounded-md border-2 mt-6 border-green-400"
         onClick={(e) => {
           e.preventDefault();
           const dialog = document.getElementById(
@@ -53,19 +60,25 @@ const NewEvent = ({ currentDate }: { currentDate: TEvent }) => {
       <dialog id="my_modal_4" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg"></h3>
-          <form onSubmit={() => addNewEvent(currentDate._id)}>
+          <form
+            method="dialog"
+            onSubmit={() => {
+              // e.preventDefault();
+              addNewEvent(currentDate._id);
+            }}
+          >
             <input
               onChange={(e) => setEventTitle(e.target.value)}
               type="text"
               placeholder="Add Title"
+              required
               className="border-b-2 border-blue-400 outline-none p-1 w-full"
-              id=""
             />
             <div className="flex gap-3 pt-3">
               <p
                 onClick={() => setEventType("work")}
-                className={`${
-                  eventType == "work"
+                className={`cursor-pointer ${
+                  eventType === "work"
                     ? "bg-blue-200 text-blue-600 px-3 rounded-md"
                     : ""
                 }`}
@@ -74,8 +87,8 @@ const NewEvent = ({ currentDate }: { currentDate: TEvent }) => {
               </p>
               <p
                 onClick={() => setEventType("personal")}
-                className={`${
-                  eventType == "personal"
+                className={`cursor-pointer ${
+                  eventType === "personal"
                     ? "bg-blue-200 text-blue-600 px-3 rounded-md"
                     : ""
                 }`}
@@ -90,6 +103,7 @@ const NewEvent = ({ currentDate }: { currentDate: TEvent }) => {
               Submit
             </button>
           </form>
+
           <div className="modal-action">
             <form method="dialog">
               <button className="btn">Close</button>
