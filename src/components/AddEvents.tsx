@@ -21,34 +21,36 @@ const AddEvents = ({ currentDate }: { currentDate: any }) => {
   return (
     <div>
       <div>
-        {date ? (
+        {currentDate?.number ? (
           <div>
             <h1 className="font-medium py-2">
               {currentDate.day}, {currentDate.number} August
             </h1>
-            <div className="grid grid-cols-2 gap-4">
-              {date["0"]?.events?.map((event: any) => (
-                <div
-                  key={event.id}
-                  className="flex justify-between border rounded-md p-2 border-blue-500 text-blue-400 cursor-pointer"
-                >
-                  <div>
-                    <p>{event.title}</p>
-                    <p>{event.category}</p>
+            {date && (
+              <div className="grid grid-cols-2 gap-4">
+                {date["0"]?.events?.map((event: any) => (
+                  <div
+                    key={event.id}
+                    className="flex justify-between border rounded-md p-2 border-blue-500 text-blue-400 cursor-pointer"
+                  >
+                    <div>
+                      <p>{event.title}</p>
+                      <p>{event.category}</p>
+                    </div>
+                    <div>
+                      <DeleteEvent
+                        currentDate={currentDate}
+                        eventId={event.id}
+                      ></DeleteEvent>
+                      <UpdateEvent
+                        currentDate={currentDate}
+                        eventId={event.id}
+                      ></UpdateEvent>
+                    </div>
                   </div>
-                  <div>
-                    <DeleteEvent
-                      currentDate={currentDate}
-                      eventId={event.id}
-                    ></DeleteEvent>
-                    <UpdateEvent
-                      currentDate={currentDate}
-                      eventId={event.id}
-                    ></UpdateEvent>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
             <NewEvent currentDate={currentDate}></NewEvent>
           </div>
         ) : (
