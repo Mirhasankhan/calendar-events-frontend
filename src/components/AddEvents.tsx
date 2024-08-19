@@ -4,7 +4,7 @@ import NewEvent from "./NewEvent";
 import UpdateEvent from "./UpdateEvent";
 
 const AddEvents = ({ currentDate }: { currentDate: any }) => {
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<null | any[]>([]);
 
   useEffect(() => {
     if (currentDate._id) {
@@ -21,7 +21,7 @@ const AddEvents = ({ currentDate }: { currentDate: any }) => {
   return (
     <div>
       <div>
-        {currentDate?.number ? (
+        {date ? (
           <div>
             <h1 className="font-medium py-2">
               {currentDate.day}, {currentDate.number} August
